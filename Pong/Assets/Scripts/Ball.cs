@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour {
 
-    [SerializeField] Vector3 speed;
-    [SerializeField] string playerTag = "Player";
+    [SerializeField] private Vector3 speed;
+    [SerializeField] private string playerTag = "Player";
     [Header("Players")]
-    [SerializeField] Paddle player1;
-    [SerializeField] Paddle player2;
+    [SerializeField] private Paddle player1;
+    [SerializeField] private Paddle player2;
 
-    Vector3 _currentSpeed, _defaultPosition;
-    bool _canMove;
+    private Vector3 _currentSpeed, _defaultPosition;
+    private bool _canMove;
 
     void Awake() {
         _canMove = false;
@@ -39,5 +39,10 @@ public class Ball : MonoBehaviour {
         _currentSpeed = speed;
         if (player1.currentPoint > player2.currentPoint) _currentSpeed.x *= -1;
         _canMove = true;
+    }
+
+    public void EndGame() {
+        _canMove = false;
+        transform.position = _defaultPosition;
     }
 }

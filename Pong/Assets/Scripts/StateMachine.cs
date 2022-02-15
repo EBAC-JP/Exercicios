@@ -5,14 +5,15 @@ using UnityEngine;
 public class StateMachine : MonoBehaviour {
     
     public static StateMachine instance;
-    enum States {
+    private enum States {
         MENU,
         PLAYING,
-        RESET_BALL
+        RESET_BALL,
+        END_GAME
     }
-    Dictionary<States, StateBase> states;
-    StateBase _currentState;
-    bool onPlay = false;
+    private Dictionary<States, StateBase> states;
+    private StateBase _currentState;
+    private States _current;
 
     void Awake() {
         instance = this;
@@ -20,24 +21,29 @@ public class StateMachine : MonoBehaviour {
         states.Add(States.MENU, new StateMenu());
         states.Add(States.PLAYING, new StatePlaying());
         states.Add(States.RESET_BALL, new StateResetBall());
+        states.Add(States.END_GAME, new StateEndGame());
 
         SwitchState(States.MENU);
     }
 
     void Update() {
-        if (Input.GetKeyDown(KeyCode.Space) && !onPlay) {
+        if (Input.GetKeyDown(KeyCode.Space) && (_current == States.MENU || _current == States.END_GAME)) {
             SwitchState(States.PLAYING);
-            onPlay = true;
         }
     }
 
-    void SwitchState(States state) {
+    void SwitchState(States state, GameObject obj = null) {
         if (_currentState != null) _currentState.OnStateExit();
         _currentState = states[state];
-        _currentState.OnStateEnter();
+        _current = state;
+        _currentState.OnStateEnter(obj);
     }
 
     public void ChangeStateToReset() {
         SwitchState(States.RESET_BALL);
+    }
+
+    public void ChangeStateToEnd(GameObject player) {
+        SwitchState(States.END_GAME, player);
     }
 }

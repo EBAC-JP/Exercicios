@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class StateBase {
-    public virtual void OnStateEnter() {
+    public virtual void OnStateEnter(GameObject obj = null) {
         Debug.Log("State Enter not implemented!");
     }
 
@@ -18,20 +18,30 @@ public class StateBase {
 
 public class StateMenu : StateBase {
     public override void OnStateExit() {
-        GameObject obj = GameObject.Find("Canvas/Press");
-        obj.SetActive(false);
+        GameManager.instance.StartGame();
     }
 }
 
 public class StatePlaying : StateBase {
-    public override void OnStateEnter() {
-        GameObject obj = GameObject.Find("Ball");
-        obj.GetComponent<Ball>().StartBall();
+    public override void OnStateEnter(GameObject obj = null) {
+        GameObject ball = GameObject.Find("Ball");
+        ball.GetComponent<Ball>().StartBall();
+        List<GameObject> players = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
+        foreach(GameObject player in players) {
+            player.GetComponent<Paddle>().StartPaddle();
+        }
     }
 }
 
 public class StateResetBall : StateBase {
-    public override void OnStateEnter() {
+    public override void OnStateEnter(GameObject obj = null) {
         GameManager.instance.ResetPosition();
+    }
+}
+
+public class StateEndGame : StateMenu {
+    public override void OnStateEnter(GameObject obj = null) {
+        obj.GetComponent<Paddle>().ActiveWonText();
+        GameManager.instance.EndGame();
     }
 }
