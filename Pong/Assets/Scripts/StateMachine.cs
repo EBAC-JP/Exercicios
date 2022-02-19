@@ -29,6 +29,8 @@ public class StateMachine : MonoBehaviour {
     void Update() {
         if (Input.GetKeyDown(KeyCode.Space) && (_current == States.MENU || _current == States.END_GAME)) {
             SwitchState(States.PLAYING);
+        } else if(Input.GetKeyDown(KeyCode.Escape) && _current == States.END_GAME) {
+            SwitchState(States.MENU);
         }
     }
 
@@ -45,9 +47,5 @@ public class StateMachine : MonoBehaviour {
 
     public void ChangeStateToEnd(GameObject player) {
         SwitchState(States.END_GAME, player);
-    }
-
-    public void ChangeToMenu() {
-        SwitchState(States.MENU);
     }
 }

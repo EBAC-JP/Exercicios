@@ -14,7 +14,7 @@ public class Paddle : MonoBehaviour {
     [SerializeField] public TextMeshProUGUI score;
     public int currentPoint;
     [Header("Winner")]
-    [SerializeField] private TextMeshProUGUI wonText;
+    [SerializeField] public TextMeshProUGUI wonText;
     [Header("Color")]
     [SerializeField] private List<Color> colors;
     [SerializeField] private GameObject upArrow;

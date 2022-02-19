@@ -9,23 +9,30 @@ public class GameManager : MonoBehaviour {
     [SerializeField] private Paddle player1;
     [SerializeField] private Paddle player2;
     [SerializeField] private TextMeshProUGUI press;
+    [SerializeField] private TextMeshProUGUI pressRestart;
     [SerializeField] private GameObject P1NameInput;
     [SerializeField] private GameObject P2NameInput;
     public static GameManager instance;
+
+    public int scoreToEnd;
 
     void Awake() {
         instance = this;
     }
 
     public void MenuGame() {
+        press.gameObject.SetActive(true);
         P1NameInput.SetActive(true);
         P2NameInput.SetActive(true);
         player1.score.gameObject.SetActive(false);
+        player1.wonText.gameObject.SetActive(false);
         player2.score.gameObject.SetActive(false);
+        player2.wonText.gameObject.SetActive(false);
     }
 
     public void StartGame() {
         press.gameObject.SetActive(false);
+        pressRestart.gameObject.SetActive(false);
         P1NameInput.SetActive(false);
         P2NameInput.SetActive(false);
         player1.score.gameObject.SetActive(true);
@@ -43,8 +50,7 @@ public class GameManager : MonoBehaviour {
     }
 
     public void EndGame() {
-        press.text = "Press Space to Restart!";
-        press.gameObject.SetActive(true);
+        pressRestart.gameObject.SetActive(true);
         ball.EndGame();
         player1.EndGame();
         player2.EndGame();
