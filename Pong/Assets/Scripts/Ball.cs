@@ -37,6 +37,7 @@ public class Ball : MonoBehaviour {
 
     public void StartBall() {
         _currentSpeed = speed;
+        if (!gameObject.activeSelf) gameObject.SetActive(true);
         if (player1.currentPoint > player2.currentPoint) _currentSpeed.x *= -1;
         _canMove = true;
     }
@@ -44,5 +45,6 @@ public class Ball : MonoBehaviour {
     public void EndGame() {
         _canMove = false;
         transform.position = _defaultPosition;
+        gameObject.SetActive(false);
     }
 }

@@ -10,7 +10,7 @@ public class Goal : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D collider) {
         if (collider.gameObject.CompareTag(ballTag)) {
             player.AddPoint();
-            if (player.currentPoint >= 5) StateMachine.instance.ChangeStateToEnd(player.gameObject);
+            if (player.currentPoint >= 1) StateMachine.instance.ChangeStateToEnd(player.gameObject);
             else StateMachine.instance.ChangeStateToReset();
         }
     }

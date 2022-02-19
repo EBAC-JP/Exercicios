@@ -17,6 +17,11 @@ public class StateBase {
 }
 
 public class StateMenu : StateBase {
+
+    public override void OnStateEnter(GameObject obj = null) {
+        GameManager.instance.MenuGame();
+    }
+
     public override void OnStateExit() {
         GameManager.instance.StartGame();
     }
@@ -24,12 +29,7 @@ public class StateMenu : StateBase {
 
 public class StatePlaying : StateBase {
     public override void OnStateEnter(GameObject obj = null) {
-        GameObject ball = GameObject.Find("Ball");
-        ball.GetComponent<Ball>().StartBall();
-        List<GameObject> players = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
-        foreach(GameObject player in players) {
-            player.GetComponent<Paddle>().StartPaddle();
-        }
+        GameManager.instance.RestartGame();
     }
 }
 
