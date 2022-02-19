@@ -8,7 +8,9 @@ public class GameManager : MonoBehaviour {
     [SerializeField] private Ball ball;
     [SerializeField] private Paddle player1;
     [SerializeField] private Paddle player2;
-    [SerializeField] TextMeshProUGUI press;
+    [SerializeField] private TextMeshProUGUI press;
+    [SerializeField] private GameObject P1NameInput;
+    [SerializeField] private GameObject P2NameInput;
     public static GameManager instance;
 
     void Awake() {
@@ -16,12 +18,16 @@ public class GameManager : MonoBehaviour {
     }
 
     public void MenuGame() {
+        P1NameInput.SetActive(true);
+        P2NameInput.SetActive(true);
         player1.score.gameObject.SetActive(false);
         player2.score.gameObject.SetActive(false);
     }
 
     public void StartGame() {
         press.gameObject.SetActive(false);
+        P1NameInput.SetActive(false);
+        P2NameInput.SetActive(false);
         player1.score.gameObject.SetActive(true);
         player2.score.gameObject.SetActive(true);
     }

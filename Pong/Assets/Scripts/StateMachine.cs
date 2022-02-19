@@ -46,4 +46,8 @@ public class StateMachine : MonoBehaviour {
     public void ChangeStateToEnd(GameObject player) {
         SwitchState(States.END_GAME, player);
     }
+
+    public void ChangeToMenu() {
+        SwitchState(States.MENU);
+    }
 }

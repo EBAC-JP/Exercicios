@@ -6,6 +6,7 @@ using TMPro;
 public class Paddle : MonoBehaviour {
 
     [SerializeField] private float speed;
+    [SerializeField] private TMP_InputField playerNameInput;
     [Header("Key Setup")]
     [SerializeField] private KeyCode upKey;
     [SerializeField] private KeyCode downKey;
@@ -21,13 +22,16 @@ public class Paddle : MonoBehaviour {
 
     private Rigidbody2D myRigidbody;
     private Vector3 _defaultPositon;
-    private bool _canMove;
+    private bool _canMove, _typing;
     private int index;
+    private string playerName;
 
     void Awake() {
         myRigidbody = gameObject.GetComponent<Rigidbody2D>();
         index = 0;
         _canMove = false;
+        _typing = false;
+        playerName = gameObject.name;
         _defaultPositon = transform.position;
         wonText.gameObject.SetActive(false);
     }
@@ -39,7 +43,7 @@ public class Paddle : MonoBehaviour {
             } else if (Input.GetKey(downKey)) {
                 myRigidbody.MovePosition(transform.position + transform.up * -speed * Time.deltaTime);
             }
-        } else {
+        } else if(!_typing) {
             CheckIndex();
             ChangeColor(colors[index]);
             if (Input.GetKeyDown(upKey) && index > 0) {
@@ -82,6 +86,7 @@ public class Paddle : MonoBehaviour {
     }
 
     public void ActiveWonText() {
+        wonText.text = playerName + "\n WON";
         wonText.gameObject.SetActive(true);
     }
 
@@ -91,5 +96,15 @@ public class Paddle : MonoBehaviour {
         index = 0;
         upArrow.SetActive(true);
         downArrow.SetActive(true);
+    }
+
+    public void IsTyping() {
+        _typing = true;
+    }
+
+    public void NotTyping() {
+        _typing = false;
+        playerName = playerNameInput.text;
+        Debug.Log("Player name: " + playerName);
     }
 }
