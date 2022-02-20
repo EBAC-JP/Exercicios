@@ -11,17 +11,17 @@ public class StateMachine : MonoBehaviour {
         RESET_BALL,
         END_GAME
     }
-    private Dictionary<States, StateBase> states;
+    private Dictionary<States, StateBase> _states;
     private StateBase _currentState;
     private States _current;
 
     void Awake() {
         instance = this;
-        states = new Dictionary<States, StateBase>();
-        states.Add(States.MENU, new StateMenu());
-        states.Add(States.PLAYING, new StatePlaying());
-        states.Add(States.RESET_BALL, new StateResetBall());
-        states.Add(States.END_GAME, new StateEndGame());
+        _states = new Dictionary<States, StateBase>();
+        _states.Add(States.MENU, new StateMenu());
+        _states.Add(States.PLAYING, new StatePlaying());
+        _states.Add(States.RESET_BALL, new StateResetBall());
+        _states.Add(States.END_GAME, new StateEndGame());
 
         SwitchState(States.MENU);
     }
@@ -36,7 +36,7 @@ public class StateMachine : MonoBehaviour {
 
     void SwitchState(States state, GameObject obj = null) {
         if (_currentState != null) _currentState.OnStateExit();
-        _currentState = states[state];
+        _currentState = _states[state];
         _current = state;
         _currentState.OnStateEnter(obj);
     }

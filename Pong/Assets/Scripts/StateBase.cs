@@ -41,7 +41,7 @@ public class StateResetBall : StateBase {
 
 public class StateEndGame : StateMenu {
     public override void OnStateEnter(GameObject obj = null) {
-        obj.GetComponent<Paddle>().ActiveWonText();
+        obj.GetComponent<Paddle>().PlayerWon();
         GameManager.instance.EndGame();
     }
 }
